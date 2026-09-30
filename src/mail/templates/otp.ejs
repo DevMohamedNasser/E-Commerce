@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div
+      style="
+        font-family: Arial, sans-serif;
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+      "
+    >
+      <h2>Verify Your Email</h2>
+      <p>
+        Thank you for registering. Use the One-Time Password (OTP) below to
+        activate your account.
+      </p>
+      <div
+        style="
+          background-color: #f0f4f8;
+          font-size: 24px;
+          font-weight: bold;
+          text-align: center;
+          padding: 15px;
+          letter-spacing: 4px;
+          color: #1a73e8;
+        "
+      >
+        <%= locals.confirmEmailOTP %>
+      </div>
+      <p>
+        If you did not request this code, you can safely disregard this message.
+      </p>
+    </div>
+  </body>
+</html>
