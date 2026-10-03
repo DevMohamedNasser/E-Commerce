@@ -14,6 +14,7 @@ import { AuthController } from "./auth/auth.controller";
 import { CategoryModule } from './category/category.module';
 import { BrandModule } from './brand/brand.module';
 import { ProductModule } from './product/product.module';
+import { CartModule } from './cart/cart.module';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -55,6 +56,8 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     BrandModule,
 
     ProductModule,
+
+    CartModule,
   ],
   controllers: [AppController],
   providers: [AppService],
