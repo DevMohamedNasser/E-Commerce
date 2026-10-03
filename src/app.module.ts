@@ -15,6 +15,7 @@ import { CategoryModule } from './category/category.module';
 import { BrandModule } from './brand/brand.module';
 import { ProductModule } from './product/product.module';
 import { CartModule } from './cart/cart.module';
+import { ReviewModule } from './review/review.module';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -58,6 +59,8 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     ProductModule,
 
     CartModule,
+
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [AppService],
