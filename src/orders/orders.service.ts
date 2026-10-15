@@ -12,6 +12,7 @@ import { HProductDocument, Product } from "../DB/models/product.model";
 import { Coupon, HCouponDocument } from "../DB/models/coupon.model";
 import { CouponService } from "../coupon/coupon.service";
 import { OrderStatusEnum } from "../common/enums/order.enum";
+import { SocketService } from "../socket/socket.service";
 
 @Injectable()
 export class OrdersService {
@@ -24,6 +25,7 @@ export class OrdersService {
     @InjectModel(Coupon.name)
     private readonly _couponModel: Model<HCouponDocument>,
     private readonly _couponService: CouponService,
+    private readonly _socketService: SocketService,
   ) {}
 
   async createOrder(createOrderDto: CreateOrderDto, userId: Types.ObjectId) {
@@ -51,6 +53,34 @@ export class OrdersService {
         );
 
       calculatedSubTotal += dbProduct.price * item.quantity;
+
+      // update stock
+      const updatedProduct = await this._productModel.findByIdAndUpdate(
+        item.product,
+        { $inc: { stock: -item.quantity } },
+        { returnDocument: "after" },
+      );
+      if (updatedProduct) {
+        if (updatedProduct.stock <= 5 && updatedProduct.stock > 0) {
+          this._socketService.emitToRoom(
+            `product:${updatedProduct._id}`,
+            "lowStockAlert",
+            {
+              productId: updatedProduct._id,
+              productName: updatedProduct.name,
+              currentStock: updatedProduct.stock,
+              message: `Running low! Only ${updatedProduct.stock} units available`,
+            },
+          );
+        }
+        if (updatedProduct.stock === 0) {
+          this._socketService.emitToAll("productSoldOut", {
+            productId: updatedProduct._id,
+            productName: updatedProduct.name,
+            message: `${updatedProduct.name} is out of stock`,
+          });
+        }
+      }
 
       orderItems.push({
         product: item.product,
