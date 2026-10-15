@@ -1,10 +1,11 @@
-import { Module } from "@nestjs/common";
+import { Global, Module } from "@nestjs/common";
 import { MailerModule } from "@nestjs-modules/mailer";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { join } from "node:path";
 import { EjsAdapter } from "@nestjs-modules/mailer/adapters/ejs.adapter";
 import { MailService } from "./mail.service";
 
+@Global()
 @Module({
   providers: [MailService],
 

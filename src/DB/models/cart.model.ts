@@ -44,7 +44,7 @@ export class Cart {
     unique: true,
     required: true,
   })
-  user: string;
+  user: Types.ObjectId;
 
   @Prop({ type: [CartItem], default: [] })
   items: CartItem[];

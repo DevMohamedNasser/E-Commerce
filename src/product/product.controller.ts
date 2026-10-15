@@ -21,6 +21,7 @@ import { FilesInterceptor } from "@nestjs/platform-express";
 import { multerOptions } from "../common/utils/multer.util";
 import { Request } from "express";
 import { Types } from "mongoose";
+import { CachingInterceptor } from "../caching/interceptors/http-cache.interceptor";
 
 @Controller("api/v1/product")
 export class ProductController {
@@ -46,11 +47,13 @@ export class ProductController {
   }
 
   @Get()
+  @UseInterceptors(CachingInterceptor)
   findAll() {
     return this.productService.findAll();
   }
 
   @Get(":id")
+  @UseInterceptors(CachingInterceptor)
   findOne(@Param("id") id: Types.ObjectId) {
     return this.productService.findOne(id);
   }

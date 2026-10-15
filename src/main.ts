@@ -13,6 +13,8 @@ async function bootstrap() {
     instrument: ObserveInstrument,
   });
 
+  app.enableShutdownHooks();
+
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
