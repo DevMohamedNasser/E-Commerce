@@ -6,11 +6,17 @@ import {
 } from "@nestjs/common";
 import { RoleEnum } from "../enums/user.enum";
 import { Request } from "express";
+import { GqlExecutionContext } from "@nestjs/graphql";
 
 @Injectable()
 export class AdminAuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest<Request>();
+    let request = context.switchToHttp().getRequest<Request>();
+
+    if (!request) {
+      const gqlContext = GqlExecutionContext.create(context);
+      request = gqlContext.getContext().req;
+    }
 
     const user = request["user"];
     if (!user) throw new ForbiddenException("User not authenticated");

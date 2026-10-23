@@ -1,0 +1,38 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Coupon {
+  _id: ID!
+  code: String!
+  createdBy: User!
+  discountPercentage: Int!
+  expiryDate: String!
+  maxUsage: Int!
+  usedBy: [ID!]!
+  usedCount: Int!
+}
+
+input CreateCouponDto {
+  code: String!
+  discountPercentage: Int!
+  expiryDate: String!
+  maxUsage: Int!
+}
+
+type Mutation {
+  createCoupon(input: CreateCouponDto!): Coupon!
+}
+
+type Query {
+  getCoupons: [Coupon!]!
+}
+
+type User {
+  _id: ID!
+  email: String!
+  firstName: String!
+  lastName: String!
+  profilePic: String!
+  username: String!
+}

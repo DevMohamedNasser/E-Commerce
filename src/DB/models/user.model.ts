@@ -4,9 +4,11 @@ import {
   ProviderEnum,
   RoleEnum,
 } from "../../common/enums/user.enum";
-import { HydratedDocument } from "mongoose";
+import { HydratedDocument, Types } from "mongoose";
 import { generateHash } from "../../common/security/hash";
+import { Field, ID, ObjectType } from "@nestjs/graphql";
 
+@ObjectType()
 @Schema({
   timestamps: true,
   toJSON: {
@@ -22,6 +24,10 @@ import { generateHash } from "../../common/security/hash";
   toObject: { virtuals: true },
 })
 export class User {
+  @Field(() => ID)
+  _id: Types.ObjectId;
+
+  @Field(() => String)
   @Prop({
     type: String,
     required: true,
@@ -31,6 +37,7 @@ export class User {
   })
   firstName: string;
 
+  @Field(() => String)
   @Prop({
     type: String,
     required: true,
@@ -41,8 +48,10 @@ export class User {
   lastName: string;
 
   // virtual
+  @Field(() => String)
   username: string;
 
+  @Field(() => String)
   @Prop({
     type: String,
     required: true,
@@ -105,6 +114,7 @@ export class User {
   })
   role: string;
 
+  @Field(() => String)
   @Prop({ type: String })
   profilePic: string;
 

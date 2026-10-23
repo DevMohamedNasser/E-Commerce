@@ -3,7 +3,7 @@ import { createObserveModule } from "@nestjs/observe";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { ConfigModule } from "@nestjs/config";
-import { resolve } from "node:path";
+import { join, resolve } from "node:path";
 import { MongooseModule } from "@nestjs/mongoose";
 import { Connection } from "mongoose";
 import { AuthModule } from "./auth/auth.module";
@@ -17,9 +17,12 @@ import { ProductModule } from "./product/product.module";
 import { CartModule } from "./cart/cart.module";
 import { ReviewModule } from "./review/review.module";
 import { CouponModule } from "./coupon/coupon.module";
-import { CachingModule } from './caching/caching.module';
-import { OrdersModule } from './orders/orders.module';
-import { SocketModule } from './socket/socket.module';
+import { CachingModule } from "./caching/caching.module";
+import { OrdersModule } from "./orders/orders.module";
+import { SocketModule } from "./socket/socket.module";
+import { GraphQLModule } from "@nestjs/graphql";
+import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
+import { Request } from "express";
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -50,6 +53,14 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
           console.log(chalk.bgGreen("DB connected successfully")),
         );
       },
+    }),
+
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      path: "/api/v1/graphql",
+      autoSchemaFile: join(process.cwd(), "src/schema/.gql"),
+      sortSchema: true,
+      context: ({ req }: { req: Request }) => ({ req }),
     }),
 
     AuthModule,

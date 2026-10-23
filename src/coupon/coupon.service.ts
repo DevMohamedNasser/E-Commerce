@@ -41,7 +41,7 @@ export class CouponService {
   findAll() {
     return this._couponModel
       .find()
-      .populate("createdBy", "firstName lastName email -_id");
+      .populate("createdBy", "firstName lastName email _id profilePic");
   }
 
   async update(id: Types.ObjectId, updateCouponDto: UpdateCouponDto) {
