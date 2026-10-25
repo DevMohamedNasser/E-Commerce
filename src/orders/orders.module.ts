@@ -9,10 +9,17 @@ import { TokenService } from "../common/services/token.service";
 import { JwtService } from "@nestjs/jwt";
 import { CouponService } from "../coupon/coupon.service";
 import { userModel } from "../DB/models/user.model";
+import { PaymentService } from "../common/services/payment/payment.service";
 
 @Module({
   imports: [orderModel, cartModel, productModel, couponModel, userModel],
   controllers: [OrdersController],
-  providers: [OrdersService, TokenService, JwtService, CouponService],
+  providers: [
+    OrdersService,
+    TokenService,
+    JwtService,
+    CouponService,
+    PaymentService,
+  ],
 })
 export class OrdersModule {}

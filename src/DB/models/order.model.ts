@@ -80,6 +80,21 @@ export class Order {
     ref: "Coupon",
   })
   appliedCoupon: string;
+
+  @Prop({
+    type: String,
+  })
+  intentId: string;
+
+  @Prop({
+    type: String,
+  })
+  refundId: string;
+
+  @Prop({
+    type: Date,
+  })
+  refundedAt: Date;
 }
 
 export const orderSchema = SchemaFactory.createForClass(Order);
